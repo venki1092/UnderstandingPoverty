@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "89921155669",
+    "firebase_url": "https://understandingpoverty-68797.firebaseio.com",
+    "project_id": "understandingpoverty-68797",
+    "storage_bucket": "understandingpoverty-68797.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89921155669:android:384629b90b52685f",
+        "android_client_info": {
+          "package_name": "com.example.venki.up"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89921155669-4j0gnu5flr0ea9fkmonvetpvsmtdomo7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.venki.up",
+            "certificate_hash": "1043917DBAF1546529469421DB93BD356B7DA1C3"
+          }
+        },
+        {
+          "client_id": "89921155669-afqiu1acj3vhuh0k6ohaqq8kjvetl6c3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuDSAAYx__hpTbewEeTLyyuU-SUD9OnQo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "89921155669-afqiu1acj3vhuh0k6ohaqq8kjvetl6c3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

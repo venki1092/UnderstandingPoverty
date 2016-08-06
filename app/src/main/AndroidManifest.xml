@@ -22,6 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HelpingHandActivity"/>
+        <activity android:name=".HelpingHandPostActivity"/>
+        <activity android:name=".HelpingHandMyrequestsActivity"/>
         <activity
             android:name=".LandingPage"
             android:label="@string/title_activity_landing_page"
