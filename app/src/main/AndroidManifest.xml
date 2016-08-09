@@ -25,7 +25,9 @@
         <activity
             android:name=".LandingPage"
             android:label="@string/title_activity_landing_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".JobsActivity" />
+        <activity android:name=".EventsActivity"></activity>
     </application>
 
 </manifest>
