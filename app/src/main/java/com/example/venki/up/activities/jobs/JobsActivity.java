@@ -68,7 +68,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
     @Override
     protected void onResume() {
         super.onResume();
-        submitButton = (Button)findViewById(R.id.job_fragment_submit_button);
+        submitButton = (Button)findViewById(R.id.job_activity_submit_button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,7 +179,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
 
     @Override
     public void onCardViewClick(String link) {
-        Intent intent = new Intent(JobsActivity.this, JobWebViewActivity.class);
+        Intent intent = new Intent(this, JobWebViewActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
     }

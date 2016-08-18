@@ -28,7 +28,6 @@
             android:backgroundTint="@color/colorPrimary"
             android:src="@drawable/job"/>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +44,6 @@
                     android:textStyle="bold"
                     android:text="Title: "/>
 
-
                 <TextView
                     android:id="@+id/job_title_textView"
                     android:layout_width="wrap_content"
@@ -53,7 +51,6 @@
                     />
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +69,6 @@
                     android:layout_height="wrap_content"
                     />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"

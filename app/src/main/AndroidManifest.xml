@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Utilities.UpApplication"
@@ -31,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.jobs.JobsActivity" />
-        <activity android:name=".activities.jobs.JobsWebViewActivity"></activity>
+        <activity android:name=".activities.jobs.JobWebViewActivity"></activity>
     </application>
 
 </manifest>
