@@ -2,7 +2,6 @@
 <resources>
     <color name="colorPrimary">#808080</color>
     <color name="colorPrimaryDark">#000</color>
-<<<<<<< HEAD
     <color name="colorAccent">#F0F0f0</color>
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>
@@ -297,7 +296,4 @@
     <color name="md_blue_grey_800">#37474F</color>
     <color name="md_blue_grey_900">#263238</color>
 
-=======
-    <color name="colorAccent">#333333</color>
->>>>>>> a22c80c97eea63d79f86bf8b1b77b81f0180368b
 </resources>

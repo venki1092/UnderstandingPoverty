@@ -18,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.venki.up.activities.jobs.JobsActivity;
+
 public class LandingPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private String email_address;
@@ -94,6 +96,10 @@ public class LandingPage extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_job) {
+            Log.d("JOBS", "Jobs nave clicked");
+            Intent intent = new Intent(LandingPage.this, JobsActivity.class);
+            startActivity(intent);
+
             // Handle the camera action
         } else if (id == R.id.nav_events) {
 
