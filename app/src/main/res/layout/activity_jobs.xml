@@ -10,12 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.venki.up.activities.jobs.JobsActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,16 +59,12 @@
 
         </LinearLayout>
 
-
         <Button
             android:id="@+id/job_fragment_submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorAccent"
             android:text="Search"/>
-
-
-
 
     </LinearLayout>
 
@@ -79,7 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/job_recyclerView"
             android:layout_width="match_parent"
@@ -87,8 +80,6 @@
 
         </android.support.v7.widget.RecyclerView>
 
-
     </android.support.v4.widget.SwipeRefreshLayout>
-
 
 </LinearLayout>
