@@ -23,7 +23,7 @@ public class JobWebViewActivity extends AppCompatActivity {
         String link = getIntentWebLink();
 
         initWebView(link);
-        createCustomWebView(link);
+//        createCustomWebView(link);
     }
 
 
@@ -35,6 +35,7 @@ public class JobWebViewActivity extends AppCompatActivity {
 
     private void initWebView(String link){
         webView = (WebView) findViewById(R.id.job_webView);
+        createCustomWebView(link);
         webView.setWebViewClient(customWebViewClient);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(link);

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.venki.up.activities.jobs.JobsActivity">
+    tools:context="com.example.venki.up.CouponsActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,15 +27,17 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="Location: "/>
+                android:text="Zip Code: "
+                android:clickable="true"
+                android:focusableInTouchMode="true"/>
 
             <EditText
-                android:id="@+id/job_city_editText"
+                android:id="@+id/coupon_zip_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="San Jose"
                 android:singleLine="true"
-                android:hint="City"/>
+                android:text="95131"
+                android:hint="Zip"/>
 
         </LinearLayout>
 
@@ -46,36 +51,39 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="Position: "/>
+                android:text="Mile Radius: "/>
 
             <EditText
-                android:id="@+id/job_title_editText"
+                android:id="@+id/coupon_miles_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sitter"
                 android:singleLine="true"
-                android:hint="Job"/>
+                android:text="20"
+                android:hint="Miles"/>
 
         </LinearLayout>
+
 
         <Button
-            android:id="@+id/job_activity_submit_button"
+            android:id="@+id/coupon_fragment_submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorAccent"
             android:text="Search"/>
 
     </LinearLayout>
 
+
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/job_swipeRefreshLayout"
+        android:id="@+id/coupon_swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/job_recyclerView"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:id="@+id/coupon_recycler_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
