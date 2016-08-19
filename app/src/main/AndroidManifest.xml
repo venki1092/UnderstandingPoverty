@@ -31,6 +31,10 @@
 
         </activity>
         <activity android:name=".CouponsActivity"></activity>
+        <activity android:name=".HelpingHandActivity"/>
+        <activity android:name=".HelpingHandPostActivity"/>
+        <activity android:name=".HelpingHandMyrequestsActivity"/>
+
     </application>
 
 </manifest>

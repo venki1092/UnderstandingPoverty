@@ -1,8 +1,10 @@
 package com.example.venki.up;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,11 +20,13 @@ import android.widget.Toast;
 
 public class LandingPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private String email_address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
+
+        email_address = getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -94,7 +98,9 @@ public class LandingPage extends AppCompatActivity
         } else if (id == R.id.nav_events) {
 
         } else if (id == R.id.nav_helping_hand) {
-
+            Intent intent = new Intent(LandingPage.this,HelpingHandActivity.class);
+            intent.putExtra(LoginActivity.EXTRA_MESSAGE,email_address);
+            startActivity(intent);
         } else if (id == R.id.nav_job) {
 
         } else if (id == R.id.nav_share) {
