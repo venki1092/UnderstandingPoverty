@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import com.example.venki.up.R;
 import com.example.venki.up.Utilities.UpApplication;
+import com.example.venki.up.activities.WebViewActivity;
 import com.example.venki.up.adapters.JobsRVAdapter;
 import com.example.venki.up.model.job.Indeed;
 import com.example.venki.up.providers.IndeedService;
@@ -180,7 +181,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
 
     @Override
     public void onCardViewClick(String link) {
-        Intent intent = new Intent(this, JobWebViewActivity.class);
+        Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
     }
