@@ -46,4 +46,14 @@ public class NetModule {
                 .build();
         return retrofit;
     }
+
+    @Provides @Named("Housing") @Singleton
+    Retrofit provideHousingRetrofit(Gson gson, OkHttpClient okHttpClient){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://data.hud.gov/Housing_Counselor/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(okHttpClient)
+                .build();
+        return retrofit;
+    }
 }

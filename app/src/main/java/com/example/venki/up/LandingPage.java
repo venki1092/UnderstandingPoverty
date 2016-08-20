@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.venki.up.activities.housing.HousingActivity;
 import com.example.venki.up.activities.jobs.JobsActivity;
 
 public class LandingPage extends AppCompatActivity
@@ -96,7 +97,6 @@ public class LandingPage extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_job) {
-            Log.d("JOBS", "Jobs nave clicked");
             Intent intent = new Intent(LandingPage.this, JobsActivity.class);
             startActivity(intent);
 
@@ -109,6 +109,10 @@ public class LandingPage extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_job) {
 
+        } else if (id == R.id.nav_housing){
+            Log.d("Housing", "Housing nav clicked");
+            Intent intent = new Intent(LandingPage.this, HousingActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

@@ -1,5 +1,6 @@
 package com.example.venki.up.Utilities;
 
+import com.example.venki.up.activities.housing.HousingActivity;
 import com.example.venki.up.activities.jobs.JobsActivity;
 
 import javax.inject.Singleton;
@@ -12,5 +13,8 @@ import dagger.Component;
 @Singleton
 @Component(modules={NetModule.class})
 public interface NetComponent {
+
     void inject(JobsActivity activity);
+    void inject(HousingActivity activity);
+
 }
