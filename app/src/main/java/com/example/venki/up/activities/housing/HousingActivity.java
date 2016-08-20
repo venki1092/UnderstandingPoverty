@@ -5,7 +5,16 @@ import android.os.Bundle;
 
 import com.example.venki.up.R;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import retrofit2.Retrofit;
+
 public class HousingActivity extends AppCompatActivity {
+
+    private static final String TAG = "HOUSING_FRAGMENT";
+
+    @Inject @Named("Housing") Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
