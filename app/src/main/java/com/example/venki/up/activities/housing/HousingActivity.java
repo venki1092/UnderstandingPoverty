@@ -19,6 +19,7 @@ import android.widget.EditText;
 
 import com.example.venki.up.R;
 import com.example.venki.up.Utilities.UpApplication;
+import com.example.venki.up.activities.WebViewActivity;
 import com.example.venki.up.adapters.HousingRVAdapter;
 import com.example.venki.up.model.housing.HousingHUD;
 import com.example.venki.up.providers.HousingService;
@@ -210,9 +211,9 @@ public class HousingActivity extends AppCompatActivity
             return;
         }
 
-//        Intent intent = new Intent(this, WebViewActivity.class);
-//        intent.putExtra("link", link);
-//        startActivity(intent);
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("link", link);
+        startActivity(intent);
     }
 
 }

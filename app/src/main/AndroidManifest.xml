@@ -34,7 +34,8 @@
         <activity android:name=".CouponsActivity" />
         <activity android:name=".activities.jobs.JobsActivity" />
         <activity android:name=".activities.jobs.JobWebViewActivity" />
-        <activity android:name=".activities.housing.HousingActivity"></activity>
+        <activity android:name=".activities.housing.HousingActivity" />
+        <activity android:name=".activities.WebViewActivity"></activity>
     </application>
 
 </manifest>
