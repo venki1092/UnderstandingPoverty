@@ -3,6 +3,8 @@ package com.example.venki.up.activities.housing;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +12,10 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.venki.up.R;
 import com.example.venki.up.Utilities.UpApplication;
@@ -21,6 +25,7 @@ import com.example.venki.up.providers.HousingService;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,6 +42,7 @@ public class HousingActivity extends AppCompatActivity
     private static final String TAG = "HOUSING_FRAGMENT";
 
     private Button submitButton;
+    private EditText cityEditText;
     private RecyclerView housingRecyclerView;
     private SwipeRefreshLayout housingSwipeRefreshLayout;
 
@@ -44,6 +50,7 @@ public class HousingActivity extends AppCompatActivity
     private GridLayoutManager gridLayoutManager;
     private HousingRVAdapter housingRVAdapter;
     SharedPreferences sharedPreferences;
+    private static Address address;
 
     @Inject @Named("Housing") Retrofit retrofit;
 
@@ -65,6 +72,7 @@ public class HousingActivity extends AppCompatActivity
 
 
     private void initViews(){
+        cityEditText = (EditText)findViewById(R.id.housing_city_editText);
         housingRecyclerView = (RecyclerView)findViewById(R.id.housing_recyclerView);
         housingSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.housing_swipeRefreshLayout);
 
@@ -130,13 +138,28 @@ public class HousingActivity extends AppCompatActivity
         });
     }
 
+    private Address getLatLng() throws IOException{
+        Geocoder gc = new Geocoder(this);
+        String location = cityEditText.getText().toString();
+        List<Address> address = gc.getFromLocationName(location,5);
+        Log.d(TAG, "Locality: " + address.get(0).getLocality());
+        Log.d(TAG, "Latitude: "+address.get(0).getLatitude());
+        Log.d(TAG, "Longitude: "+address.get(0).getLongitude());
+        return address.get(0);
+    }
 
     private void housingApiCall(){
 
+        try {
+            address = getLatLng();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         HousingService service = retrofit.create(HousingService.class);
 
-        String latitude = "37.2970155";
-        String longitude = "-121.8174129";
+        String latitude = Double.toString(address.getLatitude());
+        String longitude = Double.toString(address.getLongitude());
         String distance = "50";
         String rowLimit = "";
         String services = "";

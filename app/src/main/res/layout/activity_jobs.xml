@@ -30,7 +30,7 @@
                 android:id="@+id/job_city_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="San Jose"
+                android:text="Houston"
                 android:singleLine="true"
                 android:hint="City"/>
 

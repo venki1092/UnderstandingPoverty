@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -134,7 +135,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
         }, 0);
     }
 
-    private void jobsApiCall(){
+    private void jobsApiCall() {
 
         IndeedService service = retrofit.create(IndeedService.class);
 
