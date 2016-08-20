@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.venki.up.R;
 import com.example.venki.up.Utilities.UpApplication;
@@ -34,6 +36,7 @@ public class HousingActivity extends AppCompatActivity
 
     private static final String TAG = "HOUSING_FRAGMENT";
 
+    private Button submitButton;
     private RecyclerView housingRecyclerView;
     private SwipeRefreshLayout housingSwipeRefreshLayout;
 
@@ -57,7 +60,6 @@ public class HousingActivity extends AppCompatActivity
         displaySharedPreferences();
 
         swipeHousingRefreshListener();
-        housingApiCall();
 
     }
 
@@ -114,6 +116,18 @@ public class HousingActivity extends AppCompatActivity
                 housingSwipeRefreshLayout.setRefreshing(false);
             }
         }, 0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        submitButton = (Button)findViewById(R.id.housing_activity_submit_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                housingApiCall();
+            }
+        });
     }
 
 
