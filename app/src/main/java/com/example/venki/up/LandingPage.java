@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.venki.up.activities.coupons.Coupons;
 import com.example.venki.up.activities.housing.HousingActivity;
 import com.example.venki.up.activities.jobs.JobsActivity;
 
@@ -103,7 +104,12 @@ public class LandingPage extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_events) {
 
-        } else if (id == R.id.nav_helping_hand) {
+        }else if (id == R.id.nav_coupon){
+            Intent intent = new Intent(LandingPage.this, Coupons.class);
+            startActivity(intent);
+        }
+
+        else if (id == R.id.nav_helping_hand) {
             Intent intent = new Intent(LandingPage.this,HelpingHandActivity.class);
             intent.putExtra(LoginActivity.EXTRA_MESSAGE,email_address);
             startActivity(intent);
