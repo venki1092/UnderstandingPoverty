@@ -36,7 +36,7 @@
         <activity android:name=".activities.jobs.JobWebViewActivity" />
         <activity android:name=".activities.housing.HousingActivity" />
         <activity android:name=".activities.WebViewActivity" />
-        <activity android:name=".activities.coupons.Coupons"></activity>
+        <activity android:name=".activities.coupons.Coupons" android:label="Coupons and Discount"></activity>
     </application>
 
 </manifest>

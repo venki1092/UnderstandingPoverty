@@ -6,7 +6,7 @@ package com.example.venki.up.models.events.coupons;
 public class GroupOnResult {
     String id;
     String uuid;
-    String dealURL;
+    String dealUrl;
     String title;
     String mediumImageUrl;
 
@@ -18,6 +18,14 @@ public class GroupOnResult {
         this.id = id;
     }
 
+    public String getDealUrl() {
+        return dealUrl;
+    }
+
+    public void setDealUrl(String dealUrl) {
+        this.dealUrl = dealUrl;
+    }
+
     public String getUuid() {
         return uuid;
     }
@@ -26,13 +34,6 @@ public class GroupOnResult {
         this.uuid = uuid;
     }
 
-    public String getDealURL() {
-        return dealURL;
-    }
-
-    public void setDealURL(String dealURL) {
-        this.dealURL = dealURL;
-    }
 
     public String getTitle() {
         return title;

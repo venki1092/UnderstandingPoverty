@@ -9,9 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.venki.up.activities.WebViewActivity;
+import com.example.venki.up.model.Category;
 import com.example.venki.up.providers.CouponsGroupOn;
 import com.example.venki.up.R;
 import com.example.venki.up.models.events.coupons.GroupOnEvent;
@@ -22,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -42,26 +47,94 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
     //https://partner-api.groupon.com/deals.json?tsToken=US_AFF_0_201236_212556_0&division_id=chicago&filters=category:food-and-drink&offset=0&limit=50
     private String couponHTTP = "https://partner-api.groupon.com/";
     private  String token = "US_AFF_0_201236_212556_0";
-    private  String division = "chicago";
-    private String category ="category:food-and-drink";
+    private  String division = "san-jose";
+    private String categorySearch ="category:food-and-drink";
     private String offset ="0";
     private  int limit = 50;
+    EditText place;
+    Button searchCoupons;
 
-
+    public String formatString(String inputString){
+        String outputString = inputString.toLowerCase();
+        outputString = outputString.trim();
+        outputString = outputString.replaceAll("\\s+","-");
+        Log.i("string-test",outputString.substring(outputString.length() - 1));
+        return outputString;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons2);
 
+        place = (EditText) findViewById(R.id.place);
+        place.setText("San Jose");
+        searchCoupons = (Button) findViewById(R.id.couponsearch);
+
+        ArrayList<Category> categoryData = new ArrayList<>();
+        categoryData.add(new Category("food-and-drink","Food and Drinks"));
+        categoryData.add(new Category("health-and-fitness","Health and Fitness"));
+        categoryData.add(new Category("things-to-do","Things to Do"));
+        categoryData.add(new Category("shopping","Shopping"));
+        categoryData.add(new Category("local-services","Local Services"));
+        categoryData.add(new Category("home-improvement","Home Improvement"));
+        categoryData.add(new Category("beauty-and-spas","Beauty and Spas"));
+        categoryData.add(new Category("automotive","Automotive"));
+        categoryData.add(new Category("baby-kids-and-toys","Baby Kids and Toys"));
+        categoryData.add(new Category("electronics","Electronics"));
+        categoryData.add(new Category("entertainment-and-media","Entertainment and Media"));
+        categoryData.add(new Category("food-and-drink-goods","Food and Drink goods"));
+        categoryData.add(new Category("health-and-beauty-goods","Health and Beauty Goods"));
+        categoryData.add(new Category("home-and-garden","Home and Garden"));
+        categoryData.add(new Category("household-essentials","Household Essentials"));
+        categoryData.add(new Category("jewelry-and-watches","Jewelry and Watches"));
+        categoryData.add(new Category("men","Men"));
+        categoryData.add(new Category("sports-and-outdoors","Sports and Outdoors"));
+        categoryData.add(new Category("women","Women"));
+        categoryData.add(new Category("accommodation","Accommodation"));
+        categoryData.add(new Category("bed-and-breakfast-travel","Bed and Breakfast Travel"));
+        categoryData.add(new Category("cabin-travel","Cabin Travel"));
+        categoryData.add(new Category("cruise-travel","Cruise Travel"));
+        categoryData.add(new Category("hotels","Hotels"));
+        categoryData.add(new Category("resort-travel","Resort Travel"));
+        categoryData.add(new Category("tour-travel","Tour Travel"));
+        categoryData.add(new Category("vacation-rental-travel","Vacation Rental Travel"));
+
+
+
         final Spinner spinner = (Spinner) findViewById(R.id.category_spinner);
 
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.category_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categoryData);
         spinner.setAdapter(adapter);
-        //spinner.setOnItemSelectedListener(this);
+
+        searchCoupons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String placeValue = String.valueOf(place.getText());
+                if(placeValue.isEmpty() || placeValue == null){
+                    Toast.makeText(getApplicationContext(),"Please provide the location details",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                String test = formatString(String.valueOf(place.getText()));
+                division = test;
+                retrofit();
+
+            }
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Category category = (Category) parent.getSelectedItem();
+                categorySearch ="category:" + category.getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.coupon_recycler_id);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -87,7 +160,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
 
 
         couponService = retrofit.create(CouponsGroupOn.class);
-        Call<ResponseBody> call = couponService.getCouponsGroupOn(token,division,category,offset,limit);
+        Call<ResponseBody> call = couponService.getCouponsGroupOn(token,division,categorySearch,offset,limit);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -138,6 +211,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
     @Override
     public void onCardViewClick(String link) {
         Intent intent = new Intent(this, WebViewActivity.class);
+
         intent.putExtra("link", link);
         startActivity(intent);
     }

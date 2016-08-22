@@ -66,17 +66,13 @@ public class GroupOnRecycler extends android.support.v7.widget.RecyclerView.Adap
         this.data = data;
     }
 
-    @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        Log.i("yash", String.valueOf(data.getDeals().size()));
-        Log.i("yash", String.valueOf(data.getDeals().get(position).getResults().size()));
-        holder.title.setText(data.getDeals().get(0).getResults().get(position).getTitle());
-        //holder.info.setVisibility(View.GONE);
 
-        String url =data.getDeals().get(0).getResults().get(position).getDealURL();
+
+        holder.title.setText(data.getResults().get(position).getTitle());
+        String url =data.getResults().get(position).getDealUrl();
         holder.bind(couponClickListener, url);
-
-        String imageURI =data.getDeals().get(0).getResults().get(position).getMediumImageUrl();
+        String imageURI =data.getResults().get(position).getMediumImageUrl();//testing
 
         if (imageURI.isEmpty()) {
             imageURI = "R.drawable.blank_white.png";
@@ -108,7 +104,6 @@ public class GroupOnRecycler extends android.support.v7.widget.RecyclerView.Adap
 
     @Override
     public int getItemCount() {
-
-        return data.getDeals().size();
+        return data.getResults().size();//testing
     }
 }
