@@ -31,9 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CouponsActivity" />
         <activity android:name=".activities.jobs.JobsActivity" />
-        <activity android:name=".activities.jobs.JobWebViewActivity" />
         <activity android:name=".activities.housing.HousingActivity" />
         <activity android:name=".activities.WebViewActivity" />
         <activity android:name=".activities.coupons.Coupons" android:label="Coupons and Discount"></activity>
