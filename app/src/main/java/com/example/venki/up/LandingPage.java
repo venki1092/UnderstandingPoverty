@@ -2,8 +2,6 @@ package com.example.venki.up;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -25,6 +23,8 @@ import com.example.venki.up.activities.jobs.JobsActivity;
 public class LandingPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private String email_address;
+    private GridView gridView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,17 +46,41 @@ public class LandingPage extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_up);
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
+        gridView = (GridView) findViewById(R.id.gridview);
+        gridView.setAdapter(new ImageAdapter(this));
+        setGridViewClicker();
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(LandingPage.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void setGridViewClicker(){
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+//                Toast.makeText(LandingPage.this, "" + position, Toast.LENGTH_SHORT).show();
+
+                if (position == 0) {
+                    Intent intent = new Intent(LandingPage.this, Coupons.class);
+                    startActivity(intent);
+                }
+                if (position == 1) {
+                    //discount feature
+                    Toast.makeText(LandingPage.this, "feature coming soon", Toast.LENGTH_SHORT).show();
+                }
+                if (position == 2) {
+                    Intent intent = new Intent(LandingPage.this, JobsActivity.class);
+                    startActivity(intent);
+                }
+                if (position == 3) {
+                    //helping feature
+                    Toast.makeText(LandingPage.this, "feature coming soon", Toast.LENGTH_SHORT).show();
+                }
+                if (position == 4) {
+                    Intent intent = new Intent(LandingPage.this, HousingActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
-
     }
 
     @Override
@@ -102,7 +126,7 @@ public class LandingPage extends AppCompatActivity
             startActivity(intent);
 
             // Handle the camera action
-        } else if (id == R.id.nav_events) {
+        } else if (id == R.id.nav_discounts) {
 
         }else if (id == R.id.nav_coupon){
             Intent intent = new Intent(LandingPage.this, Coupons.class);
@@ -110,9 +134,10 @@ public class LandingPage extends AppCompatActivity
         }
 
         else if (id == R.id.nav_helping_hand) {
-            Intent intent = new Intent(LandingPage.this,HelpingHandActivity.class);
-            intent.putExtra(LoginActivity.EXTRA_MESSAGE,email_address);
-            startActivity(intent);
+            Toast.makeText(LandingPage.this, "Feature comming soon", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(LandingPage.this,HelpingHandActivity.class);
+//            intent.putExtra(LoginActivity.EXTRA_MESSAGE,email_address);
+//            startActivity(intent);
         } else if (id == R.id.nav_job) {
 
         } else if (id == R.id.nav_housing){

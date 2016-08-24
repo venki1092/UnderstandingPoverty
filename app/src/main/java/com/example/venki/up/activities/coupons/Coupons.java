@@ -51,7 +51,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
     private  String division = "san-jose";
     private String categorySearch ="category:food-and-drink";
     private String offset ="0";
-    private  int limit = 50;
+    private int limit = 30;
     EditText place;
     Button searchCoupons;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -60,7 +60,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         String outputString = inputString.toLowerCase();
         outputString = outputString.trim();
         outputString = outputString.replaceAll("\\s+","-");
-        Log.i("string-test",outputString.substring(outputString.length() - 1));
+        //Log.i("string-test",outputString.substring(outputString.length() - 1));
         return outputString;
     }
 
@@ -70,7 +70,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         setContentView(R.layout.activity_coupons2);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.coupon_swipeRefreshLayout);
         place = (EditText) findViewById(R.id.place);
-        place.setText("San Jose");
+        place.setHint("City");
         searchCoupons = (Button) findViewById(R.id.couponsearch);
 
         ArrayList<Category> categoryData = new ArrayList<>();
@@ -78,7 +78,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         categoryData.add(new Category("health-and-fitness","Health and Fitness"));
         categoryData.add(new Category("things-to-do","Things to Do"));
         categoryData.add(new Category("shopping","Shopping"));
-        categoryData.add(new Category("local-services","Local Services"));
+//        categoryData.add(new Category("local-services","Local Services"));
         categoryData.add(new Category("home-improvement","Home Improvement"));
         categoryData.add(new Category("beauty-and-spas","Beauty and Spas"));
         categoryData.add(new Category("automotive","Automotive"));
@@ -90,9 +90,9 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         categoryData.add(new Category("home-and-garden","Home and Garden"));
         categoryData.add(new Category("household-essentials","Household Essentials"));
         categoryData.add(new Category("jewelry-and-watches","Jewelry and Watches"));
-        categoryData.add(new Category("men","Men"));
+//        categoryData.add(new Category("men","Men"));
         categoryData.add(new Category("sports-and-outdoors","Sports and Outdoors"));
-        categoryData.add(new Category("women","Women"));
+//        categoryData.add(new Category("women","Women"));
         categoryData.add(new Category("accommodation","Accommodation"));
         categoryData.add(new Category("bed-and-breakfast-travel","Bed and Breakfast Travel"));
         categoryData.add(new Category("cabin-travel","Cabin Travel"));
@@ -140,10 +140,14 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
 
         recyclerView = (RecyclerView) findViewById(R.id.coupon_recycler_id);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        retrofit();
+        //retrofit();
+
         setSwipeRefreshLayout();
 
     }
+
+
+
 
     private void setSwipeRefreshLayout(){
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

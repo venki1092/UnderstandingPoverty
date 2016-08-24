@@ -87,8 +87,8 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.JobsViewHo
         holder.companyTextView.setText(results.get(position).getCompany());
         holder.locationTextView.setText(results.get(position).getFormattedLocationFull());
         holder.postedTextView.setText(results.get(position).getFormattedRelativeTime());
-        holder.jobImageView.setImageResource(R.drawable.job);
-        holder.jobImageView.setColorFilter(color);
+        holder.jobImageView.setImageResource(R.drawable.job1);
+//        holder.jobImageView.setColorFilter(color);
 
         final String url = results.get(position).getUrl();
         holder.bind(jobClickListener, url);
