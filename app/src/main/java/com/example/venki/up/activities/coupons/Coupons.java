@@ -1,6 +1,7 @@
 package com.example.venki.up.activities.coupons;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,6 +54,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
     private  int limit = 50;
     EditText place;
     Button searchCoupons;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public String formatString(String inputString){
         String outputString = inputString.toLowerCase();
@@ -66,7 +68,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons2);
-
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.coupon_swipeRefreshLayout);
         place = (EditText) findViewById(R.id.place);
         place.setText("San Jose");
         searchCoupons = (Button) findViewById(R.id.couponsearch);
@@ -139,6 +141,18 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         recyclerView = (RecyclerView) findViewById(R.id.coupon_recycler_id);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         retrofit();
+        setSwipeRefreshLayout();
+
+    }
+
+    private void setSwipeRefreshLayout(){
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                retrofit();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void retrofit(){
@@ -183,6 +197,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
                     if (recyclerView != null) {
 
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
