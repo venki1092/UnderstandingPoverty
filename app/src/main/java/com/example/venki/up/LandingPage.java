@@ -1,7 +1,9 @@
 package com.example.venki.up;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -78,7 +80,10 @@ public class LandingPage extends AppCompatActivity
                     Intent intent = new Intent(LandingPage.this, HousingActivity.class);
                     startActivity(intent);
                 }
-
+                if (position == 5) {
+                    Intent intent = new Intent(LandingPage.this, AboutUPActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -139,6 +144,7 @@ public class LandingPage extends AppCompatActivity
 //            intent.putExtra(LoginActivity.EXTRA_MESSAGE,email_address);
 //            startActivity(intent);
         } else if (id == R.id.nav_job) {
+
 
         } else if (id == R.id.nav_housing){
             Log.d("Housing", "Housing nav clicked");

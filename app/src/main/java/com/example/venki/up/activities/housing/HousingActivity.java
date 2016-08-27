@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Handler;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,14 +15,21 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.venki.up.LandingPage;
 import com.example.venki.up.R;
 import com.example.venki.up.Utilities.UpApplication;
 import com.example.venki.up.activities.WebViewActivity;
+import com.example.venki.up.activities.coupons.Coupons;
+import com.example.venki.up.activities.jobs.JobsActivity;
 import com.example.venki.up.adapters.HousingRVAdapter;
+import com.example.venki.up.model.housing.Housing;
 import com.example.venki.up.model.housing.HousingHUD;
 import com.example.venki.up.providers.HousingService;
 import com.google.gson.Gson;
@@ -68,6 +77,7 @@ public class HousingActivity extends AppCompatActivity
         displaySharedPreferences();
 
         swipeHousingRefreshListener();
+
 
     }
 
@@ -214,6 +224,31 @@ public class HousingActivity extends AppCompatActivity
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home_page, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.home_page) {
+
+            Intent intent = new Intent(HousingActivity.this, LandingPage.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
