@@ -73,11 +73,8 @@ public class HousingActivity extends AppCompatActivity
         setLayoutManager();
         getSharedPreferences();
         injectDagger();
-
         displaySharedPreferences();
-
         swipeHousingRefreshListener();
-
 
     }
 
@@ -86,7 +83,6 @@ public class HousingActivity extends AppCompatActivity
         cityEditText = (EditText)findViewById(R.id.housing_city_editText);
         housingRecyclerView = (RecyclerView)findViewById(R.id.housing_recyclerView);
         housingSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.housing_swipeRefreshLayout);
-
         housingSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimary);
     }
 
@@ -201,8 +197,6 @@ public class HousingActivity extends AppCompatActivity
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -213,14 +207,11 @@ public class HousingActivity extends AppCompatActivity
 
     }
 
-
     @Override
     public void onCardViewClick(String link) {
-
         if(link == null || link.equals("n/a")){
             return;
         }
-
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
@@ -235,14 +226,9 @@ public class HousingActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.home_page) {
-
             Intent intent = new Intent(HousingActivity.this, LandingPage.class);
             startActivity(intent);
             return true;

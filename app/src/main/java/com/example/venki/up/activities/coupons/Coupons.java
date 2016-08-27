@@ -55,9 +55,12 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
     private String categorySearch ="category:food-and-drink";
     private String offset ="0";
     private int limit = 30;
-    EditText place;
-    Button searchCoupons;
+    private EditText place;
+    private Button searchCoupons;
+    private Spinner spinner;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ArrayAdapter<Category> adapter;
+    private ArrayList<Category> categoryData;
 
     public String formatString(String inputString){
         String outputString = inputString.toLowerCase();
@@ -71,24 +74,39 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons2);
+        setViews();
+        setCategoryData();
+        spinner.setAdapter(adapter);
+        setSearchCoupon();
+        setSpinner();
+        recyclerView = (RecyclerView) findViewById(R.id.coupon_recycler_id);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        //retrofit();
+        setSwipeRefreshLayout();
+    }
+
+    private void setViews(){
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.coupon_swipeRefreshLayout);
         place = (EditText) findViewById(R.id.place);
         place.setHint("City");
         searchCoupons = (Button) findViewById(R.id.couponsearch);
+        spinner = (Spinner) findViewById(R.id.category_spinner);
+    }
 
-        ArrayList<Category> categoryData = new ArrayList<>();
+    private void setCategoryData(){
+        categoryData = new ArrayList<>();
         categoryData.add(new Category("food-and-drink","Food and Drinks"));
         categoryData.add(new Category("health-and-fitness","Health and Fitness"));
         categoryData.add(new Category("things-to-do","Things to Do"));
-        categoryData.add(new Category("shopping","Shopping"));
+//        categoryData.add(new Category("shopping","Shopping"));
 //        categoryData.add(new Category("local-services","Local Services"));
         categoryData.add(new Category("home-improvement","Home Improvement"));
         categoryData.add(new Category("beauty-and-spas","Beauty and Spas"));
-        categoryData.add(new Category("automotive","Automotive"));
+//        categoryData.add(new Category("automotive","Automotive"));
         categoryData.add(new Category("baby-kids-and-toys","Baby Kids and Toys"));
         categoryData.add(new Category("electronics","Electronics"));
         categoryData.add(new Category("entertainment-and-media","Entertainment and Media"));
-        categoryData.add(new Category("food-and-drink-goods","Food and Drink goods"));
+//        categoryData.add(new Category("food-and-drink-goods","Food and Drink goods"));
         categoryData.add(new Category("health-and-beauty-goods","Health and Beauty Goods"));
         categoryData.add(new Category("home-and-garden","Home and Garden"));
         categoryData.add(new Category("household-essentials","Household Essentials"));
@@ -96,7 +114,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
 //        categoryData.add(new Category("men","Men"));
         categoryData.add(new Category("sports-and-outdoors","Sports and Outdoors"));
 //        categoryData.add(new Category("women","Women"));
-        categoryData.add(new Category("accommodation","Accommodation"));
+//        categoryData.add(new Category("accommodation","Accommodation"));
         categoryData.add(new Category("bed-and-breakfast-travel","Bed and Breakfast Travel"));
         categoryData.add(new Category("cabin-travel","Cabin Travel"));
         categoryData.add(new Category("cruise-travel","Cruise Travel"));
@@ -104,14 +122,10 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         categoryData.add(new Category("resort-travel","Resort Travel"));
         categoryData.add(new Category("tour-travel","Tour Travel"));
         categoryData.add(new Category("vacation-rental-travel","Vacation Rental Travel"));
+        adapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categoryData);
+    }
 
-
-
-        final Spinner spinner = (Spinner) findViewById(R.id.category_spinner);
-
-        ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categoryData);
-        spinner.setAdapter(adapter);
-
+    private void setSearchCoupon(){
         searchCoupons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,17 +134,18 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
                     Toast.makeText(getApplicationContext(),"Please provide the location details",Toast.LENGTH_LONG).show();
                     return;
                 }
-                String test = formatString(String.valueOf(place.getText()));
-                division = test;
+                String userCityInput = formatString(String.valueOf(place.getText()));
+                division = userCityInput;
+//                Log.i("division", "city is: " + division);
                 retrofit();
-
             }
         });
+    }
 
+    private void setSpinner(){
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 Category category = (Category) parent.getSelectedItem();
                 categorySearch ="category:" + category.getId();
             }
@@ -140,17 +155,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
 
             }
         });
-
-        recyclerView = (RecyclerView) findViewById(R.id.coupon_recycler_id);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        //retrofit();
-
-        setSwipeRefreshLayout();
-
     }
-
-
-
 
     private void setSwipeRefreshLayout(){
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -163,7 +168,6 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
     }
 
     private void retrofit(){
-
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -178,7 +182,6 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
-
 
         couponService = retrofit.create(CouponsGroupOn.class);
         Call<ResponseBody> call = couponService.getCouponsGroupOn(token,division,categorySearch,offset,limit);
@@ -195,16 +198,12 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
                     if (couponsData == null) {
                         return;
                     }
-
                     couponsRecyclerAdapter = new GroupOnRecycler(Coupons.this,couponsData);
                     recyclerView.setAdapter(couponsRecyclerAdapter);
                     couponsRecyclerAdapter.notifyDataSetChanged();
                     //Collections.addAll(couponsList, couponsData);
                     //                Log.i(TAG, " "+ couponsList);
-                    if (recyclerView != null) {
-
-                    }
-
+                    if (recyclerView != null) {}
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -238,22 +237,17 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         startActivity(intent);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home_page, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.home_page) {
 
             Intent intent = new Intent(Coupons.this, LandingPage.class);
