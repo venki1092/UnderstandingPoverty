@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.venki.up.LandingPage"
+    tools:context="com.app.venki.up.LandingPage"
     tools:showIn="@layout/app_bar_landing_page">
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,9 +18,9 @@
         android:layout_height="match_parent"
         android:columnWidth="90dp"
         android:numColumns="2"
+        android:paddingStart="8dp"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
-        android:stretchMode="columnWidth"
         android:gravity="center"
         />
 

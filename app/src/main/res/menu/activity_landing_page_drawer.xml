@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_coupon"
             android:icon="@drawable/discount"
-            android:title="Coupons" />
+            android:title="Events/Coupons" />
         <item
             android:id="@+id/nav_helping_hand"
             android:icon="@drawable/helping_hand"
@@ -15,9 +15,9 @@
             android:icon="@drawable/job"
             android:title="Jobs" />
         <item
-            android:id="@+id/nav_events"
+            android:id="@+id/nav_discounts"
             android:icon="@drawable/calendar"
-            android:title="Events" />
+            android:title="Discounts" />
         <item
             android:id="@+id/nav_housing"
             android:icon="@drawable/ic_hotel_black_24dp"
