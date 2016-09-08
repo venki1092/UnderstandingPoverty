@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.app.venki.up.LandingPage;
+import com.app.venki.up.Utilities.Utilities;
 import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.model.Category;
 import com.app.venki.up.providers.CouponsGroupOn;
@@ -126,6 +127,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         searchCoupons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utilities.hideSoftKeyboard(Coupons.this);
                 String placeValue = String.valueOf(place.getText());
                 if(placeValue.isEmpty() || placeValue == null){
                     Toast.makeText(getApplicationContext(),"Please provide the location details",Toast.LENGTH_LONG).show();
