@@ -1,4 +1,4 @@
-package com.app.venki.up.clickListener;
+package com.app.venki.up.Utilities.clickListener;
 
 import android.content.Context;
 import android.view.GestureDetector;
