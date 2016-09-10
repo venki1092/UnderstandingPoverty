@@ -22,7 +22,7 @@ import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.model.Category;
 import com.app.venki.up.providers.CouponsGroupOn;
 import com.app.venki.up.R;
-import com.app.venki.up.models.events.coupons.GroupOnEvent;
+import com.app.venki.up.model.coupons.GroupOnEvent;
 import com.app.venki.up.recycleradapters.GroupOnRecycler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,4 +1,4 @@
-package com.app.venki.up.models.events.events;
+package com.app.venki.up.model.events;
 
 import java.util.List;
 

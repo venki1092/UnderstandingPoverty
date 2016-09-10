@@ -1,6 +1,6 @@
 package com.app.venki.up.providers;
 
-import com.app.venki.up.models.events.events.GoogleEvent;
+import com.app.venki.up.model.events.GoogleEvent;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
