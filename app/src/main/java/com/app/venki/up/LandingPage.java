@@ -47,7 +47,7 @@ public class LandingPage extends AppCompatActivity
         getSupportActionBar().setIcon(R.mipmap.ic_up);
 
         gridView = (GridView) findViewById(R.id.gridview);
-        gridView.setAdapter(new ImageAdapter(this));
+        gridView.setAdapter(new LandingPageImageAdapter(this));
         setGridViewClicker();
 
 
