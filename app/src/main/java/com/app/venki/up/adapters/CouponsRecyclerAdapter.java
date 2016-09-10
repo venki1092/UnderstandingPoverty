@@ -1,8 +1,4 @@
-package com.app.venki.up.recycleradapters;
-
-/**
- * Created by yash on 8/20/2016.
- */
+package com.app.venki.up.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -14,18 +10,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.app.venki.up.R;
-import com.app.venki.up.model.coupons.GroupOnEvent;
+import com.app.venki.up.model.coupons.CouponsArray;
 
+/**
+ * Created by Billy on 7/9/16.
+ */
+public class CouponsRecyclerAdapter extends android.support.v7.widget.RecyclerView.Adapter<CouponsRecyclerAdapter.RecyclerViewHolder> {
 
-public class GroupOnRecycler extends android.support.v7.widget.RecyclerView.Adapter<GroupOnRecycler.RecyclerViewHolder> {
-
-    private GroupOnEvent data;
+    private CouponsArray data;
     private Context context;
-    private CouponClickListener2 couponClickListener;
+    private CouponClickListener couponClickListener;
 
-
-
-    public interface CouponClickListener2{
+    public interface CouponClickListener{
         void onCardViewClick(String link);
     }
 
@@ -45,7 +41,7 @@ public class GroupOnRecycler extends android.support.v7.widget.RecyclerView.Adap
             info = (TextView) itemView.findViewById(R.id.info_ID);
         }
 
-        public void bind(final CouponClickListener2 couponClickListener, final String link){
+        public void bind(final CouponClickListener couponClickListener, final String link){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -56,18 +52,21 @@ public class GroupOnRecycler extends android.support.v7.widget.RecyclerView.Adap
     }
 
 
-    public GroupOnRecycler(CouponClickListener2 couponClickListener, GroupOnEvent data) {
-        this.couponClickListener =  couponClickListener;
+    public CouponsRecyclerAdapter(CouponClickListener couponClickListener, CouponsArray data) {
+        this.couponClickListener = couponClickListener;
         this.data = data;
     }
 
+    @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
 
+        holder.title.setText(data.getCoupons().get(position).getDealTitle());
+        holder.info.setVisibility(View.GONE);
 
-        holder.title.setText(data.getResults().get(position).getTitle());
-        String url =data.getResults().get(position).getDealUrl();
+        String url = data.getCoupons().get(position).getURL();
         holder.bind(couponClickListener, url);
-        String imageURI =data.getResults().get(position).getMediumImageUrl();//testing
+
+        String imageURI = data.getCoupons().get(position).getShowImageStandardBig();
 
         if (imageURI.isEmpty()) {
             imageURI = "R.drawable.blank_white.png";
@@ -91,7 +90,7 @@ public class GroupOnRecycler extends android.support.v7.widget.RecyclerView.Adap
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.cardview_coupons, parent, false);
+        View view = inflater.inflate(R.layout.recyclerview_custom_layout, parent, false);
         RecyclerViewHolder vh = new RecyclerViewHolder(view);
 
         return vh;
@@ -99,6 +98,8 @@ public class GroupOnRecycler extends android.support.v7.widget.RecyclerView.Adap
 
     @Override
     public int getItemCount() {
-        return data.getResults().size();//testing
+        return data.getCoupons().size();
     }
+
+
 }
