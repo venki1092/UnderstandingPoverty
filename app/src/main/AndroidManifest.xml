@@ -41,7 +41,7 @@
         <activity
             android:name=".activities.coupons.Coupons"
             android:label="Events and Coupons"></activity>
-        <activity android:name=".AboutUPActivity"></activity>
+        <activity android:name=".activities.AboutUPActivity"></activity>
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.app.venki.up.activities.AboutUPActivity;
 import com.app.venki.up.activities.coupons.Coupons;
 import com.app.venki.up.activities.housing.HousingActivity;
 import com.app.venki.up.activities.jobs.JobsActivity;
