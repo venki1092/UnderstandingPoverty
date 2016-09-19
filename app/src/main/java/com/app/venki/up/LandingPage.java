@@ -80,7 +80,7 @@ public class LandingPage extends AppCompatActivity
         gridView = (GridView) findViewById(R.id.gridview);
         gridView.setAdapter(new LandingPageImageAdapter(this));
         setGridViewClicker();
-        
+
     }
 
     private void setGridViewClicker(){
@@ -90,6 +90,7 @@ public class LandingPage extends AppCompatActivity
 
                 if (position == 0) {
                     Intent intent = new Intent(LandingPage.this, Coupons.class);
+                    intent.putExtra(Constants.LOCALITY, locality);
                     startActivity(intent);
                 }
                 if (position == 1) {
@@ -98,6 +99,7 @@ public class LandingPage extends AppCompatActivity
                 }
                 if (position == 2) {
                     Intent intent = new Intent(LandingPage.this, JobsActivity.class);
+                    intent.putExtra(Constants.LOCALITY, locality);
                     startActivity(intent);
                 }
                 if (position == 3) {
@@ -106,10 +108,12 @@ public class LandingPage extends AppCompatActivity
                 }
                 if (position == 4) {
                     Intent intent = new Intent(LandingPage.this, HousingActivity.class);
+                    intent.putExtra(Constants.LOCALITY, locality);
                     startActivity(intent);
                 }
                 if (position == 5) {
                     Intent intent = new Intent(LandingPage.this, AboutUPActivity.class);
+                    intent.putExtra(Constants.LOCALITY, locality);
                     startActivity(intent);
                 }
             }

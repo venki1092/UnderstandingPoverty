@@ -20,6 +20,7 @@ import com.app.venki.up.LandingPage;
 import com.app.venki.up.R;
 import com.app.venki.up.Utilities.UpApplication;
 import com.app.venki.up.Utilities.UtilityFunctions;
+import com.app.venki.up.Utilities.findLocation.Constants;
 import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.adapters.JobsRVAdapter;
 import com.app.venki.up.model.job.Indeed;
@@ -68,6 +69,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
 
         swipeJobsRefreshListener();
 
+        getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
     }
 
     @Override

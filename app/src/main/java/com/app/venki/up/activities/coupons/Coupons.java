@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.app.venki.up.LandingPage;
 import com.app.venki.up.Utilities.UtilityFunctions;
+import com.app.venki.up.Utilities.findLocation.Constants;
 import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.model.Category;
 import com.app.venki.up.providers.CouponsGroupOn;
@@ -81,6 +82,9 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         //retrofit();
         setSwipeRefreshLayout();
+
+        getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
+
     }
 
     private void setViews(){

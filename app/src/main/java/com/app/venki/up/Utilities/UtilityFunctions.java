@@ -15,5 +15,4 @@ public class UtilityFunctions {
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
     }
-
 }
