@@ -17,13 +17,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.app.venki.up.LandingPage;
-import com.app.venki.up.Utilities.Utilities;
+import com.app.venki.up.Utilities.UtilityFunctions;
+import com.app.venki.up.Utilities.findLocation.Constants;
 import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.model.Category;
 import com.app.venki.up.providers.CouponsGroupOn;
 import com.app.venki.up.R;
-import com.app.venki.up.models.events.coupons.GroupOnEvent;
-import com.app.venki.up.recycleradapters.GroupOnRecycler;
+import com.app.venki.up.model.coupons.GroupOnEvent;
+import com.app.venki.up.adapters.GroupOnRecycler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -81,6 +82,9 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         //retrofit();
         setSwipeRefreshLayout();
+
+        getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
+
     }
 
     private void setViews(){
@@ -127,7 +131,7 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         searchCoupons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utilities.hideSoftKeyboard(Coupons.this);
+                UtilityFunctions.hideSoftKeyboard(Coupons.this);
                 String placeValue = String.valueOf(place.getText());
                 if(placeValue.isEmpty() || placeValue == null){
                     Toast.makeText(getApplicationContext(),"Please provide the location details",Toast.LENGTH_LONG).show();

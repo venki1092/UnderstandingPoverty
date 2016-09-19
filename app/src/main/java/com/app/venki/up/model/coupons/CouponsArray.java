@@ -1,4 +1,4 @@
-package com.app.venki.up.models.events.coupons;
+package com.app.venki.up.model.coupons;
 
 import java.util.List;
 

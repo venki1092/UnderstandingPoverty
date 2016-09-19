@@ -1,4 +1,4 @@
-package com.app.venki.up;
+package com.app.venki.up.activities.helpinghand;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.app.venki.up.R;
 import com.app.venki.up.adapters.PostListAdapter;
 import com.app.venki.up.model.Post;
 

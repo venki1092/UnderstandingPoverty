@@ -1,4 +1,4 @@
-package com.app.venki.up;
+package com.app.venki.up.activities.helpinghand;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.app.venki.up.LoginActivity;
+import com.app.venki.up.R;
 import com.app.venki.up.model.Post;
 import com.app.venki.up.model.Singleton;
 import com.firebase.client.ChildEventListener;

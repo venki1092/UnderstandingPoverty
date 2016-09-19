@@ -1,7 +1,16 @@
 package com.app.venki.up;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,14 +24,31 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.app.venki.up.Utilities.findLocation.Constants;
+import com.app.venki.up.Utilities.findLocation.FetchAddressIntentService;
+import com.app.venki.up.Utilities.findLocation.CheckInternetConnection;
+import com.app.venki.up.activities.AboutUPActivity;
 import com.app.venki.up.activities.coupons.Coupons;
 import com.app.venki.up.activities.housing.HousingActivity;
 import com.app.venki.up.activities.jobs.JobsActivity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 public class LandingPage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private final String TAG = LandingPage.class.getSimpleName();
+    private final int PERMISSION_ACCESS_COARSE_LOCATION = 22;
+
     private String email_address;
     private GridView gridView;
+    private String locality;
+
+    private GoogleApiClient googleApiClient;
+    private static Location lastLocation;
+    private AddressResultReceiver resultReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +71,15 @@ public class LandingPage extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_up);
 
-        gridView = (GridView) findViewById(R.id.gridview);
-        gridView.setAdapter(new ImageAdapter(this));
-        setGridViewClicker();
 
+        setGoogleApiClient();
+        checkPermissions();
+
+        resultReceiver = new AddressResultReceiver(new Handler());
+
+        gridView = (GridView) findViewById(R.id.gridview);
+        gridView.setAdapter(new LandingPageImageAdapter(this));
+        setGridViewClicker();
 
     }
 
@@ -59,6 +90,7 @@ public class LandingPage extends AppCompatActivity
 
                 if (position == 0) {
                     Intent intent = new Intent(LandingPage.this, Coupons.class);
+                    intent.putExtra(Constants.LOCALITY, locality);
                     startActivity(intent);
                 }
                 if (position == 1) {
@@ -67,6 +99,7 @@ public class LandingPage extends AppCompatActivity
                 }
                 if (position == 2) {
                     Intent intent = new Intent(LandingPage.this, JobsActivity.class);
+                    intent.putExtra(Constants.LOCALITY, locality);
                     startActivity(intent);
                 }
                 if (position == 3) {
@@ -75,10 +108,12 @@ public class LandingPage extends AppCompatActivity
                 }
                 if (position == 4) {
                     Intent intent = new Intent(LandingPage.this, HousingActivity.class);
+                    intent.putExtra(Constants.LOCALITY, locality);
                     startActivity(intent);
                 }
                 if (position == 5) {
                     Intent intent = new Intent(LandingPage.this, AboutUPActivity.class);
+                    intent.putExtra(Constants.LOCALITY, locality);
                     startActivity(intent);
                 }
             }
@@ -157,4 +192,143 @@ public class LandingPage extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+
+
+    protected void startIntentService() {
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+        intent.putExtra(Constants.RECEIVER, resultReceiver);
+        intent.putExtra(Constants.LOCATION_DATA_EXTRA, lastLocation);
+        startService(intent);
+    }
+
+    private void setGoogleApiClient() {
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+    }
+
+    private void checkPermissions() {
+        //Ask for permission if we don't have it
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSION_ACCESS_COARSE_LOCATION);
+        } else {
+            // Permissions Granted
+            Log.d(TAG, "Permissions Granted");
+            getLatLongCoordinates();
+        }
+    }
+
+
+    @Override
+    protected void onStart() {
+        googleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        if(CheckInternetConnection.isNetworkAvailable(LandingPage.this)){
+            Log.d(TAG, "Network Available");
+            getLatLongCoordinates();
+        }else{
+            Log.d(TAG, "Internet Not Connected");
+        }
+
+        if(lastLocation != null){
+            startIntentService();
+        }else{Log.d(TAG, "LAST LOCATION IS NULL");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_ACCESS_COARSE_LOCATION:
+                if (permissions.length < 0){
+                    return;
+                }
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "Permissions Granted");
+                    getLatLongCoordinates();
+                } else {
+                    Toast.makeText(this, "Need device location.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+
+    private void getLatLongCoordinates() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            if (lastLocation != null) {
+                Log.d(TAG, "Latitude: "+String.valueOf(lastLocation.getLatitude()));
+                Log.d(TAG, "Longitude: "+String.valueOf(lastLocation.getLongitude()));
+
+            }
+            else {
+                Log.d(TAG, "LastLocation null");
+            }
+
+        }
+    }
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+    @SuppressLint("ParcelCreator")
+    class AddressResultReceiver extends ResultReceiver {
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            // Display the address string
+            // or an error message sent from the intent service.
+            locality = resultData.getString(Constants.RESULT_DATA_KEY);
+            Log.d(TAG, "ADDRESS: " + locality);
+
+
+            // Show a toast message if an address was found.
+            if (resultCode == Constants.SUCCESS_RESULT) {
+                Log.d(TAG, "ADDRESS FOUND: "+getString(R.string.address_found));
+            }
+        }
+    }
+
+
+
+
 }
