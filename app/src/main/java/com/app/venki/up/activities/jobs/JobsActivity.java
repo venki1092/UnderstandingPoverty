@@ -1,6 +1,5 @@
 package com.app.venki.up.activities.jobs;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,14 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.app.venki.up.LandingPage;
 import com.app.venki.up.R;
 import com.app.venki.up.Utilities.UpApplication;
-import com.app.venki.up.Utilities.Utilities;
+import com.app.venki.up.Utilities.UtilityFunctions;
 import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.adapters.JobsRVAdapter;
 import com.app.venki.up.model.job.Indeed;
@@ -79,7 +77,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utilities.hideSoftKeyboard(JobsActivity.this);
+                UtilityFunctions.hideSoftKeyboard(JobsActivity.this);
                 jobsApiCall();
             }
         });

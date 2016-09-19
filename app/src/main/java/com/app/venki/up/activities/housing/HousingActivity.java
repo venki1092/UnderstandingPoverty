@@ -22,7 +22,7 @@ import android.widget.EditText;
 import com.app.venki.up.LandingPage;
 import com.app.venki.up.R;
 import com.app.venki.up.Utilities.UpApplication;
-import com.app.venki.up.Utilities.Utilities;
+import com.app.venki.up.Utilities.UtilityFunctions;
 import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.adapters.HousingRVAdapter;
 import com.app.venki.up.model.housing.HousingHUD;
@@ -135,7 +135,7 @@ public class HousingActivity extends AppCompatActivity
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utilities.hideSoftKeyboard(HousingActivity.this);
+                UtilityFunctions.hideSoftKeyboard(HousingActivity.this);
                 housingApiCall();
             }
         });

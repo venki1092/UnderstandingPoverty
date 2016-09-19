@@ -1,7 +1,18 @@
 package com.app.venki.up;
 
+import android.*;
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,11 +30,23 @@ import com.app.venki.up.activities.AboutUPActivity;
 import com.app.venki.up.activities.coupons.Coupons;
 import com.app.venki.up.activities.housing.HousingActivity;
 import com.app.venki.up.activities.jobs.JobsActivity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 public class LandingPage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
+
+    private final int PERMISSION_ACCESS_COARSE_LOCATION = 22;
+    private final String RESULT_DATA_KEY = "UP.RESULT_DATA_KEY";
+    private final int SUCCESS_RESULT = 0;
+    private final int FAILURE_RESULT = 1;
+
     private String email_address;
     private GridView gridView;
+
+    private GoogleApiClient googleApiClient;
+    private static Location lastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +69,16 @@ public class LandingPage extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_up);
 
+
+        getSupportActionBar().setTitle("HELLO");
+
         gridView = (GridView) findViewById(R.id.gridview);
         gridView.setAdapter(new LandingPageImageAdapter(this));
         setGridViewClicker();
 
 
     }
+
 
     private void setGridViewClicker(){
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -158,4 +185,6 @@ public class LandingPage extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
