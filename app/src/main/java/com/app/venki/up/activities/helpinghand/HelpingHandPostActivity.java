@@ -1,4 +1,4 @@
-package com.app.venki.up;
+package com.app.venki.up.activities.helpinghand;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.app.venki.up.LoginActivity;
+import com.app.venki.up.R;
 import com.app.venki.up.model.Post;
 import com.firebase.client.Firebase;
 

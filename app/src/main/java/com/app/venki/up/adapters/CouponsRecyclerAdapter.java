@@ -1,4 +1,4 @@
-package com.app.venki.up.recycleradapters;
+package com.app.venki.up.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.app.venki.up.R;
-import com.app.venki.up.models.events.coupons.CouponsArray;
+import com.app.venki.up.model.coupons.CouponsArray;
 
 /**
  * Created by Billy on 7/9/16.

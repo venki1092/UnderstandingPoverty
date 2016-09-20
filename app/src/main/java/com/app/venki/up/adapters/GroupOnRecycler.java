@@ -1,4 +1,4 @@
-package com.app.venki.up.recycleradapters;
+package com.app.venki.up.adapters;
 
 /**
  * Created by yash on 8/20/2016.
@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.app.venki.up.R;
-import com.app.venki.up.models.events.coupons.GroupOnEvent;
+import com.app.venki.up.model.coupons.GroupOnEvent;
 
 
 public class GroupOnRecycler extends android.support.v7.widget.RecyclerView.Adapter<GroupOnRecycler.RecyclerViewHolder> {

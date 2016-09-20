@@ -1,4 +1,4 @@
-package com.app.venki.up.models.events.coupons;
+package com.app.venki.up.model.coupons;
 
 /**
  * Created by Billy on 7/9/16.

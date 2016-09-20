@@ -19,6 +19,8 @@ import android.widget.EditText;
 import com.app.venki.up.LandingPage;
 import com.app.venki.up.R;
 import com.app.venki.up.Utilities.UpApplication;
+import com.app.venki.up.Utilities.UtilityFunctions;
+import com.app.venki.up.Utilities.findLocation.Constants;
 import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.adapters.JobsRVAdapter;
 import com.app.venki.up.model.job.Indeed;
@@ -67,6 +69,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
 
         swipeJobsRefreshListener();
 
+        getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
     }
 
     @Override
@@ -76,6 +79,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UtilityFunctions.hideSoftKeyboard(JobsActivity.this);
                 jobsApiCall();
             }
         });
@@ -213,5 +217,4 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
 
         return super.onOptionsItemSelected(item);
     }
-
 }

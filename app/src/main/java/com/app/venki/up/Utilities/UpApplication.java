@@ -2,8 +2,6 @@ package com.app.venki.up.Utilities;
 
 import android.app.Application;
 
-import com.app.venki.up.Utilities.DaggerNetComponent;
-
 /**
  * Created by samsiu on 8/17/16.
  */

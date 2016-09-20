@@ -22,5 +22,10 @@
     <string name="about_up"> What is UP- Understanding Poverty? \n\n We help organization gain an understanding of their clients that live in poverty and help them develop better products and services to meet their clients needs.
         \n Visit our site to learn more at \n \n  http://www.understandingpoverty.com</string>
 
-
+    <string name="service_not_available">Service Not Available</string>
+    <string name="invalid_lat_long_used">Invalid Lat Long Used</string>
+    <string name="no_address_found">No Address Found</string>
+    <string name="address_found">Address Found</string>
+    <string name="no_location_data_provided">No Location Data Provided</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

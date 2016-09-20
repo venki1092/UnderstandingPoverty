@@ -1,4 +1,4 @@
-package com.app.venki.up.models.events.events;
+package com.app.venki.up.model.events;
 
 /**
  * Created by yash on 7/9/2016.

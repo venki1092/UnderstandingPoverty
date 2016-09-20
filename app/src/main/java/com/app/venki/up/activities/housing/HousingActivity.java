@@ -22,6 +22,8 @@ import android.widget.EditText;
 import com.app.venki.up.LandingPage;
 import com.app.venki.up.R;
 import com.app.venki.up.Utilities.UpApplication;
+import com.app.venki.up.Utilities.UtilityFunctions;
+import com.app.venki.up.Utilities.findLocation.Constants;
 import com.app.venki.up.activities.WebViewActivity;
 import com.app.venki.up.adapters.HousingRVAdapter;
 import com.app.venki.up.model.housing.HousingHUD;
@@ -56,6 +58,7 @@ public class HousingActivity extends AppCompatActivity
     SharedPreferences sharedPreferences;
     private static Address address;
 
+
     @Inject @Named("Housing") Retrofit retrofit;
 
     @Override
@@ -70,6 +73,7 @@ public class HousingActivity extends AppCompatActivity
         displaySharedPreferences();
         swipeHousingRefreshListener();
 
+        getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
     }
 
 
@@ -134,6 +138,7 @@ public class HousingActivity extends AppCompatActivity
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UtilityFunctions.hideSoftKeyboard(HousingActivity.this);
                 housingApiCall();
             }
         });
