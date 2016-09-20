@@ -74,6 +74,7 @@ public class HousingActivity extends AppCompatActivity
         swipeHousingRefreshListener();
 
         getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
+        cityEditText.setText(getIntent().getExtras().getString(Constants.LOCALITY));
     }
 
 

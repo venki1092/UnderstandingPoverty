@@ -70,6 +70,7 @@ public class JobsActivity extends AppCompatActivity implements JobsRVAdapter.Job
         swipeJobsRefreshListener();
 
         getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
+        cityEditText.setText(getIntent().getExtras().getString(Constants.LOCALITY));
     }
 
     @Override

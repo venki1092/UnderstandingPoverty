@@ -84,13 +84,12 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         setSwipeRefreshLayout();
 
         getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
-
+        place.setText(getIntent().getExtras().getString(Constants.LOCALITY));
     }
 
     private void setViews(){
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.coupon_swipeRefreshLayout);
         place = (EditText) findViewById(R.id.place);
-        place.setHint("City");
         searchCoupons = (Button) findViewById(R.id.couponsearch);
         spinner = (Spinner) findViewById(R.id.category_spinner);
     }
