@@ -160,6 +160,7 @@ public class LandingPage extends AppCompatActivity
 
         if (id == R.id.nav_job) {
             Intent intent = new Intent(LandingPage.this, JobsActivity.class);
+            intent.putExtra(Constants.LOCALITY, locality);
             startActivity(intent);
 
             // Handle the camera action
@@ -167,6 +168,7 @@ public class LandingPage extends AppCompatActivity
 
         }else if (id == R.id.nav_coupon){
             Intent intent = new Intent(LandingPage.this, Coupons.class);
+            intent.putExtra(Constants.LOCALITY, locality);
             startActivity(intent);
         }
 
@@ -181,6 +183,7 @@ public class LandingPage extends AppCompatActivity
         } else if (id == R.id.nav_housing){
             Log.d("Housing", "Housing nav clicked");
             Intent intent = new Intent(LandingPage.this, HousingActivity.class);
+            intent.putExtra(Constants.LOCALITY, locality);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
 
