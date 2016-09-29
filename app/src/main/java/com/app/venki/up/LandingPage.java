@@ -45,10 +45,11 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.LocationListener;
 
 public class LandingPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private final String TAG = LandingPage.class.getSimpleName();
     private final int PERMISSION_ACCESS_COARSE_LOCATION = 22;
@@ -58,13 +59,14 @@ public class LandingPage extends AppCompatActivity
     private String locality;
 
     private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
     private static Location lastLocation;
     private AddressResultReceiver resultReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkPermissions();
+
         setGoogleApiClient();
 
         setContentView(R.layout.activity_landing_page);
@@ -88,6 +90,7 @@ public class LandingPage extends AppCompatActivity
 
 
         resultReceiver = new AddressResultReceiver(new Handler());
+        checkPermissions();
 
         gridView = (GridView) findViewById(R.id.gridview);
         gridView.setAdapter(new LandingPageImageAdapter(this));
@@ -255,8 +258,14 @@ public class LandingPage extends AppCompatActivity
 
     @Override
     protected void onStart() {
+        Log.d(TAG, "ON START");
         googleApiClient.connect();
+        requestLocationStatus();
 
+        super.onStart();
+    }
+
+    private void requestLocationStatus(){
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(30 * 1000);
@@ -279,6 +288,7 @@ public class LandingPage extends AppCompatActivity
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location
                         // requests here.
+                        checkPermissions();
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         // Location settings are not satisfied. But could be fixed by showing the user
@@ -299,18 +309,19 @@ public class LandingPage extends AppCompatActivity
                 }
             }
         });
-
-        super.onStart();
     }
+
 
     @Override
     protected void onStop() {
+        Log.d(TAG, "ON STOP");
         googleApiClient.disconnect();
         super.onStop();
     }
 
     @Override
     public void onConnected(Bundle connectionHint) {
+        Log.d(TAG, "ON CONNECTED");
         if(CheckInternetConnection.isNetworkAvailable(LandingPage.this)){
             Log.d(TAG, "Network Available");
             getLatLongCoordinates();
@@ -321,6 +332,7 @@ public class LandingPage extends AppCompatActivity
         if(lastLocation != null){
             startIntentService();
         }else{Log.d(TAG, "LAST LOCATION IS NULL");
+            checkPermissions();
         }
     }
 
@@ -350,15 +362,24 @@ public class LandingPage extends AppCompatActivity
             if (lastLocation != null) {
                 Log.d(TAG, "Latitude: "+String.valueOf(lastLocation.getLatitude()));
                 Log.d(TAG, "Longitude: "+String.valueOf(lastLocation.getLongitude()));
-
+                startIntentService();
             }
             else {
+//                setGoogleApiClient();
+//                googleApiClient.connect();
+//                locationRequest = LocationRequest.create()
+//                        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+//                        .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+//                        .setFastestInterval(1 * 1000);
+//
+//                LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
+
                 Log.d(TAG, "LastLocation null");
             }
 
         }
     }
-
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -394,6 +415,9 @@ public class LandingPage extends AppCompatActivity
     }
 
 
-
-
+    @Override
+    public void onLocationChanged(Location location) {
+        lastLocation.setLatitude(location.getLatitude());
+        lastLocation.setLongitude(location.getLongitude());
+    }
 }
