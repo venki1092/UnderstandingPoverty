@@ -84,13 +84,12 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
         setSwipeRefreshLayout();
 
         getSupportActionBar().setTitle(getIntent().getExtras().getString(Constants.LOCALITY));
-
+        place.setText(getIntent().getExtras().getString(Constants.LOCALITY));
     }
 
     private void setViews(){
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.coupon_swipeRefreshLayout);
         place = (EditText) findViewById(R.id.place);
-        place.setHint("City");
         searchCoupons = (Button) findViewById(R.id.couponsearch);
         spinner = (Spinner) findViewById(R.id.category_spinner);
     }
@@ -193,20 +192,22 @@ public class Coupons extends AppCompatActivity implements GroupOnRecycler.Coupon
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String parsedRespone = null;
                 try {
-                    //parsedRespone = response.body().string().replace("[","{\"coupons\" : [").replace("]","]}");
-                    parsedRespone = response.body().string();
-                    Gson gson = new Gson();
+                    if(response.body() != null){
+                        //parsedRespone = response.body().string().replace("[","{\"coupons\" : [").replace("]","]}");
+                        parsedRespone = response.body().string();
+                        Gson gson = new Gson();
 
-                    GroupOnEvent couponsData = gson.fromJson(parsedRespone, GroupOnEvent.class);
-                    if (couponsData == null) {
-                        return;
+                        GroupOnEvent couponsData = gson.fromJson(parsedRespone, GroupOnEvent.class);
+                        if (couponsData == null) {
+                            return;
+                        }
+                        couponsRecyclerAdapter = new GroupOnRecycler(Coupons.this,couponsData);
+                        recyclerView.setAdapter(couponsRecyclerAdapter);
+                        couponsRecyclerAdapter.notifyDataSetChanged();
+                        //Collections.addAll(couponsList, couponsData);
+                        //                Log.i(TAG, " "+ couponsList);
+                        if (recyclerView != null) {}
                     }
-                    couponsRecyclerAdapter = new GroupOnRecycler(Coupons.this,couponsData);
-                    recyclerView.setAdapter(couponsRecyclerAdapter);
-                    couponsRecyclerAdapter.notifyDataSetChanged();
-                    //Collections.addAll(couponsList, couponsData);
-                    //                Log.i(TAG, " "+ couponsList);
-                    if (recyclerView != null) {}
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
