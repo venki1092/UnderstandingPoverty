@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
@@ -66,8 +67,10 @@ public class LandingPage extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "ON CREATE");
         setGoogleApiClient();
+        googleApiClient.connect();
+       // requestLocationStatus();
 
         setContentView(R.layout.activity_landing_page);
 
@@ -86,7 +89,6 @@ public class LandingPage extends AppCompatActivity
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_up);
-
 
 
         resultReceiver = new AddressResultReceiver(new Handler());
@@ -225,16 +227,13 @@ public class LandingPage extends AppCompatActivity
 
     private void setGoogleApiClient() {
         if (googleApiClient == null) {
+            Log.d(TAG, "BUILD NEW GOOGLE CLIENT");
             googleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
         }
-
-
-
-
 
     }
 
@@ -261,7 +260,6 @@ public class LandingPage extends AppCompatActivity
         Log.d(TAG, "ON START");
         googleApiClient.connect();
         requestLocationStatus();
-
         super.onStart();
     }
 
@@ -363,16 +361,35 @@ public class LandingPage extends AppCompatActivity
                 Log.d(TAG, "Latitude: "+String.valueOf(lastLocation.getLatitude()));
                 Log.d(TAG, "Longitude: "+String.valueOf(lastLocation.getLongitude()));
                 startIntentService();
+
+//                SharedPreferences pref = getApplicationContext().getSharedPreferences("lastLocation", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = pref.edit();
+//                editor.putString("lastLat", String.valueOf(lastLocation.getLatitude()));
+//                editor.putString("lastLong", String.valueOf(lastLocation.getLongitude()));
+//                editor.commit();
             }
             else {
-//                setGoogleApiClient();
-//                googleApiClient.connect();
-//                locationRequest = LocationRequest.create()
-//                        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-//                        .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-//                        .setFastestInterval(1 * 1000);
-//
-//                LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
+                // ---- Crashes, error is googleapiclient not connected --- ////
+                if(googleApiClient.isConnected()){
+                    Log.d(TAG, "GOOGLE API CONNECTED");
+                    locationRequest = LocationRequest.create()
+                            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                            .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+                            .setFastestInterval(1 * 1000);
+
+                    LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+                }else{
+
+                    Log.d(TAG, "GOOGLE API NOT CONNECTED");
+//                    SharedPreferences pref = getSharedPreferences("lastLocation", MODE_PRIVATE);
+//                    String Lat = pref.getString("lastLat", "29.764822");
+//                    String Long = pref.getString("lastLong", "-95.372206");
+//                    Log.d(TAG, "Pref Lat: " + Lat);
+//                    Log.d(TAG, "Pref Long: " + Long);
+//                    lastLocation.setLatitude(Double.valueOf(Lat));
+//                    lastLocation.setLongitude(Double.valueOf(Long));
+                }
 
 
                 Log.d(TAG, "LastLocation null");
@@ -417,7 +434,15 @@ public class LandingPage extends AppCompatActivity
 
     @Override
     public void onLocationChanged(Location location) {
-        lastLocation.setLatitude(location.getLatitude());
-        lastLocation.setLongitude(location.getLongitude());
+        if(googleApiClient.isConnected()){
+            Log.d(TAG, "lastLocation latitdue"+location.getLatitude());
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                lastLocation.setLatitude(location.getLatitude());
+                lastLocation.setLongitude(location.getLongitude());
+                startIntentService();
+            }
+        }
     }
 }
